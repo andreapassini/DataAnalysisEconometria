@@ -6,7 +6,7 @@ library(dplyr)
 library(ggplot2)
 library(AER)
 
-load("C:/Users/Nicola/Desktop/intermedio econometria/Data_takehome_2.RData")
+load("Data_takehome_2.RData")
 
 dat
 summary(dat)
