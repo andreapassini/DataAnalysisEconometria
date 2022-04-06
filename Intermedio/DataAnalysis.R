@@ -16,6 +16,23 @@ library(dplyr)
 library(ggplot2)
 library(AER)
 
+# With this type of information, a data analyst – in this case YOU! – can finally start looking for
+# patterns regarding what determines high-growth. 
+#
+# High-growth (HG) is thus a binary variable taking
+# a value of 1 if the firm has a sales growth rate of more than 20% per year, 0 otherwise.
+#
+# More precisely, your task is to:
+#   • Provide descriptive statistics and figures of key innovation-related variables – i.e., R&D, product
+# vs. product innovations, patents [2 points]
+#
+#   • Estimate a binary response model to explain the determinants of high growth [2 points]
+#
+#   • Be creative and find interesting patterns in the data [2 points]
+#
+# This type of analysis is very important for managers and policy-maker, for example if they wish to
+# identify promising companies for M&A and/or target financial support.
+
 load("Data_takehome_2.RData")
 
 head(dat)
@@ -25,6 +42,7 @@ dat %>%
   select(metro_code, year) %>% 
   group_by(metro_code)
   
+
 
 # dat %>% 
 #   filter( < 25)
