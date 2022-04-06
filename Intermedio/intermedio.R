@@ -1,5 +1,5 @@
 
-rm(list = ls())
+rm(list = ls()) # PERCHE'?
 
 library(MASS)
 library(dplyr)

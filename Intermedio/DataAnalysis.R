@@ -6,6 +6,9 @@ library("tidyverse")
 require("tidyverse")
 # tidyverse includes packages like dplyr and ggplot2
 
+?rm
+?ls
+
 rm(list = ls())
 
 library(MASS)
@@ -20,4 +23,20 @@ head(dat)
 # %>% AndThen
 dat %>% 
   select(metro_code, year) %>% 
-  filter(metro_code == "AT212")
+  group_by(metro_code)
+  
+
+# dat %>% 
+#   filter( < 25)
+#   ggplot(aes())+
+#   geom_point(aes(colour = ,
+#                  size = ),
+#              alpha = 0.5)+
+#   geom_smooth()+
+#   facet_wrap(~year, nrow = 1)
+#   labs(x = "",
+#        y = "",
+#        title = "")
+#   theme_bw()
+
+
