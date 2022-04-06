@@ -21,8 +21,11 @@ dat <- dat %>%
   mutate(greentech_log = log(green_tech),
         popul_log = log(popul),
         vamanuf_log = log(va_manuf),
-        rile_log = log(rile^2),
+        rile_log = log(rile),
         qoi_log = log(qoi))
+
+qoi_log %>% 
+  na.omit()
 
 dat <- na.omit(dat)
 
@@ -34,7 +37,7 @@ lm.fit <- lm(qoi ~ greentech_log, data = dat)
 summary(lm.fit)
 
 ggplot(dat, aes(x = qoi, y = greentech_log)) +
-  geom_point() +
+  geom_point(size = dat$rile / 10, colour = "red") +
   stat_smooth(method = "lm", se = TRUE, size = 1) +
   labs(x = "x (log)", 
        y = "y (log)",
@@ -46,11 +49,13 @@ ggplot(dat, aes(x = qoi, y = greentech_log)) +
 
 library(rgl)
 
-x <- dat$rile
-y <- dat$qoi
-z <- log(dat$green_tech)
+dat <- na.omit(dat)
 
-fit <- lm(y ~ x + z)
+y <- dat$rile
+x <- dat$qoi
+z <- sqrt(dat$green_tech)
+
+fit <- lm(z ~ y + x)
 
 grid.lines = 26
 x.pred <- seq(min(x), max(x), length.out = grid.lines)   # Sequence of x values; check by typing in console x.pred
@@ -59,13 +64,18 @@ xy <- expand.grid(x = x.pred, y = y.pred)                # Create a grid with x 
 z.pred <- matrix(predict(fit, newdata = xy),             # Predict the z values based on the values in the grid, and save the outcome in a matrix
                  nrow = grid.lines, ncol = grid.lines)
 
+?persp3d
+
 # Run persp3 + point3d if you wish to move the object in 3D
 persp3d(x.pred, y.pred, z.pred, 
-        zlim = c(10, 13),
+        ylim = range(y, finite = TRUE),
+        zlim = range(z, finite = TRUE),
+        xlim = range(x, finite = TRUE),
         col = "green", expand = 0.8, alpha = 0.5, ticktype = "detailed",
-        xlab = "rile", ylab = "qoi", zlab = "green tech")
+        xlab = "qoi", ylab = "rile", zlab = "green tech")
 
 points3d(x, y, z, col = "red", size = 5, add = T)
+lines3d(x, y, z, col = "blue", size = 2, add = T)
 
 
 rm(pred_int)
