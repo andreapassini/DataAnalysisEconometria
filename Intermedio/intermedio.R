@@ -6,7 +6,7 @@ library(dplyr)
 library(ggplot2)
 library(AER)
 
-load("C:/Users/Nicola/Desktop/intermedio econometria/Data_takehome_2.RData")
+load("Data_takehome_2.RData")
 
 dat
 summary(dat)
@@ -15,16 +15,20 @@ summary(dat)
 
 help(lm)
 
-
-#data(dat)
-#help(dat)
+dat <- na.omit(dat)
 
 dat <- dat %>%
-  mutate(greentech_log = log(green_tech %>% inf.omit())  ,
+  mutate(greentech_log = log(green_tech),
         popul_log = log(popul),
         vamanuf_log = log(va_manuf),
- #        rile_log = log(rile), #fixare, valori negativi
+        rile_log = log(rile^2),
         qoi_log = log(qoi))
+
+dat <- na.omit(dat)
+
+# log of green_tech generates -inf
+# log of qoi generates NaN cause neg
+
 
 lm.fit <- lm(qoi ~ greentech_log, data = dat)
 summary(lm.fit)
@@ -35,6 +39,10 @@ ggplot(dat, aes(x = qoi, y = greentech_log)) +
   labs(x = "x (log)", 
        y = "y (log)",
        title = "linear regression line")
+
+#
+# 3D
+#
 
 library(rgl)
 
