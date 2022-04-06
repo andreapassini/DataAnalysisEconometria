@@ -38,23 +38,13 @@ load("Data_takehome_2.RData")
 head(dat)
 
 # %>% AndThen
+plot(dat$metro_code, dat$ghg_log)
+
 dat %>% 
-  select(metro_code, year) %>% 
-  group_by(metro_code)
+  select(metro_code, ghg_log, green_tech) %>% 
+  filter(ghg_log >= 15) %>% 
+  mutate(ghgGreen_tech = ghg_log - green_tech) %>% 
+  group_by(metro_code) %>% 
+  summarise(AverageGhgGreen_tech = mean(ghgGreen_tech))
   
-
-
-# dat %>% 
-#   filter( < 25)
-#   ggplot(aes())+
-#   geom_point(aes(colour = ,
-#                  size = ),
-#              alpha = 0.5)+
-#   geom_smooth()+
-#   facet_wrap(~year, nrow = 1)
-#   labs(x = "",
-#        y = "",
-#        title = "")
-#   theme_bw()
-
-
+  
